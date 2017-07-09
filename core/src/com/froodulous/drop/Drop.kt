@@ -18,7 +18,12 @@ import ktx.app.clearScreen
 import ktx.app.use
 import ktx.math.vec3
 
-class MenuScreen(val game: Drop) : KtxScreen {
+/**
+ * The menu screen.
+ *
+ * @param game the game that this screen belongs to
+ */
+class MenuScreen(game: Drop) : DropScreen(game) {
     val camera = OrthographicCamera().apply {
         setToOrtho(false, 800f, 480f)
     }
@@ -27,22 +32,26 @@ class MenuScreen(val game: Drop) : KtxScreen {
         clearScreen(0f, 0f, 0.2f, 1f)
 
         camera.update()
-        game.batch.projectionMatrix = camera.combined
+        batch.projectionMatrix = camera.combined
 
-        game.batch.begin()
-        game.font.draw(game.batch, "Welcome to Drop", 100f, 150f)
-        game.font.draw(game.batch, "Click anywhere to begin", 100f, 100f)
-        game.batch.end()
+        batch.use {
+            font.draw(it, "Welcome to Drop", 100f, 150f)
+            font.draw(it, "Click anywhere to begin", 100f, 100f)
+        }
 
         if (Gdx.input.isTouched) {
-            game.addScreen(GameScreen(game))
             game.setScreen<GameScreen>()
             dispose()
         }
     }
 }
 
-class GameScreen(val game: Drop) : KtxScreen {
+/**
+ * The game screen.
+ *
+ * @param game the game that this screen belongs to.
+ */
+class GameScreen(game: Drop) : DropScreen(game) {
 
     val dropImage = Texture(Gdx.files.internal("droplet.png"))
     val bucketImage = Texture(Gdx.files.internal("bucket.png"))
@@ -91,15 +100,15 @@ class GameScreen(val game: Drop) : KtxScreen {
         camera.update()
 
         // Tell the sprite batch to render in the camera's coordinate  system.
-        game.batch.projectionMatrix = camera.combined
+        batch.projectionMatrix = camera.combined
 
         // Use the sprite batch to draw things.
-        game.batch.use {
-            game.font.draw(it, "Drops Collected: $dropsGathered", 0F, 480F)
+        batch.use {
             it.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height)
             raindrops.forEach { drop ->
                 it.draw(dropImage, drop.x, drop.y, drop.width, drop.height)
             }
+            font.draw(it, "Drops Collected: $dropsGathered", 0F, 480F)
         }
 
         // Process user input.
@@ -156,6 +165,9 @@ class GameScreen(val game: Drop) : KtxScreen {
     }
 }
 
+/**
+ * The Drop game.
+ */
 class Drop : KtxGame<Screen>() {
     lateinit var font: BitmapFont
     lateinit var batch: SpriteBatch
@@ -166,6 +178,7 @@ class Drop : KtxGame<Screen>() {
             color = Color.WHITE
         }
         addScreen(MenuScreen(this))
+        addScreen(GameScreen(this))
         setScreen<MenuScreen>()
     }
 
@@ -174,4 +187,15 @@ class Drop : KtxGame<Screen>() {
         batch.dispose()
         font.dispose()
     }
+}
+
+/**
+ * Abstract base class for screens in the drop game.
+ * Exposes the game's SpriteBatch and BitmapFont for easier reuse.
+ *
+ * @param game the game that this screen belongs to.
+ */
+abstract class DropScreen(val game: Drop) : KtxScreen {
+    val batch = game.batch
+    val font = game.font
 }
