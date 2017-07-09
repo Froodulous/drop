@@ -10,5 +10,4 @@ fun main(arg: Array<String>) {
     config.width = 800
     config.height = 480
     LwjglApplication(Drop(), config)
-
 }

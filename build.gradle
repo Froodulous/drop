@@ -47,7 +47,7 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+
     }
 }
 
@@ -61,7 +61,7 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        
+
     }
 }
 
@@ -71,7 +71,10 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        // ktx-actors:
+        compile "io.github.libktx:ktx-actors:1.9.6-b6"
+        compile "io.github.libktx:ktx-app:1.9.6-b6"
+        compile "io.github.libktx:ktx-math:1.9.6-b6"
     }
 }
 
