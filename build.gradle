@@ -25,6 +25,7 @@ allprojects {
     ext {
         appName = "drop"
         gdxVersion = '1.9.6'
+        ktxVersion = '1.9.6-b6'
         roboVMVersion = '2.3.1'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -72,9 +73,9 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         // ktx-actors:
-        compile "io.github.libktx:ktx-actors:1.9.6-b6"
-        compile "io.github.libktx:ktx-app:1.9.6-b6"
-        compile "io.github.libktx:ktx-math:1.9.6-b6"
+        compile "io.github.libktx:ktx-actors:$ktxVersion"
+        compile "io.github.libktx:ktx-app:$ktxVersion"
+        compile "io.github.libktx:ktx-math:$ktxVersion"
     }
 }
 
