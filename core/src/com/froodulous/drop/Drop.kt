@@ -10,12 +10,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
-import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.TimeUtils
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.app.use
+import ktx.collections.*
 import ktx.math.vec3
 
 /**
@@ -72,7 +72,7 @@ class GameScreen(game: Drop) : DropScreen(game) {
         height = 64F
     }
 
-    val raindrops = Array<Rectangle>()
+    val raindrops = gdxArrayOf<Rectangle>()
 
     private var dropsGathered = 0
 
@@ -83,7 +83,7 @@ class GameScreen(game: Drop) : DropScreen(game) {
     }
 
     private fun spawnRaindrop() {
-        raindrops.add(Rectangle().apply {
+        raindrops + (Rectangle().apply {
             x = MathUtils.random(0F, 800F - 64F)
             y = 480F
             width = 64F
@@ -138,9 +138,7 @@ class GameScreen(game: Drop) : DropScreen(game) {
         }
 
         // Move the raindrops
-        val iterator = raindrops.iterator()
-        while (iterator.hasNext()) {
-            val drop = iterator.next()
+        raindrops.iterate { drop: Rectangle, iterator: MutableIterator<Rectangle> ->
             drop.y -= 200 * delta
             if (drop.y + 64 < 0) {
                 iterator.remove()
@@ -150,6 +148,7 @@ class GameScreen(game: Drop) : DropScreen(game) {
                 dropSound.play()
                 iterator.remove()
             }
+
         }
     }
 
