@@ -1,4 +1,4 @@
-package com.froodulous.drop
+package com.froodulous.kracer
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -35,8 +35,8 @@ class MenuScreen(game: Drop) : DropScreen(game) {
         batch.projectionMatrix = camera.combined
 
         batch.use {
-            font.draw(it, "Welcome to Drop", 100f, 150f)
-            font.draw(it, "Click anywhere to begin", 100f, 100f)
+            font.draw(it, "Welcome to KRacer", 100f, 150f)
+            font.draw(it, "Press any key to begin", 100f, 100f)
         }
 
         if (Gdx.input.isTouched) {

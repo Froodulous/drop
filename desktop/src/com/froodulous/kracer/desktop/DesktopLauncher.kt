@@ -1,8 +1,8 @@
-package com.froodulous.drop.desktop
+package com.froodulous.kracer.desktop
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import com.froodulous.drop.Drop
+import com.froodulous.kracer.Drop
 
 fun main(arg: Array<String>) {
     val config = LwjglApplicationConfiguration()
